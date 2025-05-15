@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Calculator</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .calculator {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #000;
+      width: 300px;
+    }
+    .display {
+      background: #000;
+      color: #0f0;
+      font-size: 2em;
+      padding: 15px;
+      text-align: right;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      overflow-x: auto;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #2c2c2c;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #3d3d3d;
+    }
+    button.operator {
+      background: #ff9500;
+      color: #000;
+    }
+    button.operator:hover {
+      background: #ffa733;
+    }
+    button.equal {
+      background: #0f0;
+      color: #000;
+    }
+    button.equal:hover {
+      background: #2aff2a;
+    }
+    button.clear {
+      background: #f00;
+      color: #fff;
+    }
+    button.clear:hover {
+      background: #ff4d4d;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <div class="display" id="display">0</div>
+  <div class="buttons">
+    <button class="clear" onclick="clearDisplay()">C</button>
+    <button onclick="append('%')">%</button>
+    <button onclick="append('**')">x²</button>
+    <button class="operator" onclick="append('/')">÷</button>
+
+    <button onclick="append('7')">7</button>
+    <button onclick="append('8')">8</button>
+    <button onclick="append('9')">9</button>
+    <button class="operator" onclick="append('*')">×</button>
+
+    <button onclick="append('4')">4</button>
+    <button onclick="append('5')">5</button>
+    <button onclick="append('6')">6</button>
+    <button class="operator" onclick="append('-')">−</button>
+
+    <button onclick="append('1')">1</button>
+    <button onclick="append('2')">2</button>
+    <button onclick="append('3')">3</button>
+    <button class="operator" onclick="append('+')">+</button>
+
+    <button onclick="append('0')">0</button>
+    <button onclick="append('.')">.</button>
+    <button class="equal" onclick="calculate()">=</button>
+    <button onclick="append('Math.sqrt(')">√</button>
+  </div>
+</div>
+
+<script>
+  const display = document.getElementById('display');
+
+  function append(char) {
+    if (display.innerText === '0' || display.innerText === 'Error') {
+      display.innerText = '';
+    }
+    display.innerText += char;
+  }
+
+  function clearDisplay() {
+    display.innerText = '0';
+  }
+
+  function calculate() {
+    try {
+      // Evaluate using Function constructor for slightly safer parsing
+      let result = Function('"use strict";return (' + display.innerText + ')')();
+      display.innerText = result;
+    } catch (e) {
+      display.innerText = 'Error';
+    }
+  }
+</script>
+
+</body>
+</html>
+
